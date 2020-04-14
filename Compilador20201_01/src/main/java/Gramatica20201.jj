@@ -1,0 +1,190 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
+ */
+
+
+PARSER_BEGIN(Gramatica20201)
+
+public class Gramatica20201{
+  public static List<String> resultado = new ArrayList<String >();
+  }
+  
+
+PARSER_END(Gramatica20201)
+
+SKIP :
+{
+  " "
+| "\r"
+| "\t"
+| "\n"
+| "/*" : COMENTARIO_BLOCO
+}
+
+<COMENTARIO_BLOCO> SKIP:
+{
+  "*/" : DEFAULT
+| < ~[]>
+}
+
+SPECIAL_TOKEN : {
+< COMENTARIO_LINHA: "//"(~["\n","\r"])* ("\n"|"\r"|"\r\n")? > }
+
+//PALAVRAS RESERVADAS
+TOKEN :
+{
+ <DO: "do">
+|  <THIS: "this">
+|  <BODY: "body">
+|  <DESCRIPTION: "description">
+|  <DECLARATION: "declaration">
+|  <TYPE: "type">
+|  <IS: "is">
+|  <AND: "and">
+|  <AS: "as">
+|  <DESIGNATE: "designate">
+|  <READ: "read">
+|  <WRITE: "write">
+|  <ALL: "all">
+|  <REPEAT: "repeat">
+}
+
+TOKEN : /* OPERADORES RELACIONAIS */
+{ 
+  < IGUAL : "==" >
+| < DIFERENTE : "!=" >
+| < MENOR : "<<" >
+| < MAIOR : ">>" >
+| < MENOR_IGUAL : "<<==" >
+| < MAIOR_IGUAL : ">>==" >
+}
+
+TOKEN : /* OPERATORS */
+{
+  < SOMA : "+" >
+| < SUBTRACAO : "-" >
+| < MULTIPLICACAO : "*" >
+| < DIVISAO : "/" >
+| < POTENCIA : "**" >
+| < DIVISAO_INTEIRA : "%" >
+| < DIVISAO_INTEIRA_RESTO : "%%" >
+}
+
+TOKEN : /* OPERADORES LOGICOS */
+{ 
+  < E : "&" >
+| < OU : "|" >
+| < NAO : "!" >
+}
+
+TOKEN : { /* CONSTANTE LOGICA*/
+  <CLOGICA: "true" | "untrue">
+}
+
+TOKEN :
+{ 
+< CLITERAL: "'"<ASCIIC>"'" | "´"<ASCIIC>"´">
+| <#ASCIIC : ( ~["\"","\\","\n","\r"] | "\\" ( ["n","t","b","r","f","\\","\'","\""] | ( ["\n","\r"] | "\r\n")))* >
+}
+
+TOKEN : /* CONSTANTES NUMERICAS */
+{	
+  <CINTEIRO: (<DIGITO>|<DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO>)>
+| <CREAL:	((<DIGITO>|<DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO><DIGITO><DIGITO>)"."
+				(<DIGITO>|<DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO>))>
+|<#DIGITO: ["0"-"9"]>
+}
+
+
+TOKEN :
+{
+  < IDENTIFICADOR : (<LETTER><DIGIT>(< LETTER >|< SIMBOLO >) | < LETTER > | < LETTER > (<SIMBOLO >)* )+  >
+| < LEFT_PAREN : "(" >
+| < RIGHT_PAREN : ")" >
+}
+
+TOKEN :
+{
+  <#DIGIT: ["0"-"9"]>
+| <#LETTER: ["a"-"z", "A"-"Z"]>
+| <#SIMBOLO: "_" >
+}
+
+int start() :
+{}
+{
+  wff()   // "well formed formula"  
+  {
+    return 0;  // returns 0 on successful parse
+  }
+}
+
+
+void wff() :
+{}
+{
+  term() 
+    (
+      term()
+    )*
+}
+
+void term() :
+{}
+{
+  symbol()  
+| < LEFT_PAREN > wff() < RIGHT_PAREN >
+//|< SUBTRACAO > term()  // Unary SUBTRACAO
+}
+
+
+  
+
+void symbol() :
+{Token t;
+}
+{
+ t= < IDENTIFICADOR >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" IDENTIFICADOR");}
+| t= < DO >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");} 
+| t= < THIS >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < BODY >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < DESCRIPTION >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < DECLARATION >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < TYPE >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < IS >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < AND >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < AS >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < DESIGNATE >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < READ >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < WRITE >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < ALL >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+| t= < REPEAT >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");}
+
+| t= < SOMA >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR ARITMÉTICO");}
+| t= < SUBTRACAO >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR ARITMÉTICO");}
+| t= < DIVISAO >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR ARITMÉTICO");}
+| t= < POTENCIA >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR ARITMÉTICO");}
+| t= < MULTIPLICACAO >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR ARITMÉTICO");}
+| t= < DIVISAO_INTEIRA >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR ARITMÉTICO");}
+| t= < DIVISAO_INTEIRA_RESTO >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR ARITMÉTICO");}
+
+| t= < IGUAL >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR RELACIONAL");}
+| t= < DIFERENTE >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR RELACIONAL");}
+| t= < MENOR >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR RELACIONAL");}
+| t= < MAIOR >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR RELACIONAL");}
+| t= < MENOR_IGUAL >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR RELACIONAL");}
+| t= < MAIOR_IGUAL >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR RELACIONAL");}
+
+| t= < E >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR LÓGICO");}
+| t= < OU >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR LÓGICO");}
+| t= < NAO >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR LÓGICO");}
+
+| t= < CLOGICA >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" CONSTANTE LÓGICA");}
+| t= < CLITERAL >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" CONSTANTE LITERAL");}
+| t= < CINTEIRO >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" NÚMERO INTEIRO");}
+| t= < CREAL >  {resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" NÚMERO REAL");}
+
+}
+
+
+
