@@ -102,8 +102,9 @@ public class InterfaceCompilador20201 extends JFrame {
 	    contentPane.add(btnCompilar);
 	    
 	    btnCompilar.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
+				textAreaOUTPUT.setText("");
 				// TODO Auto-generated method stub
 				String sentence = textAreaINPUT.getText();
                 // Put parens around sentence so that parser knows scope

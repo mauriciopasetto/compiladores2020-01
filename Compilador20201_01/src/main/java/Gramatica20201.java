@@ -24,13 +24,26 @@ public class Gramatica20201 implements Gramatica20201Constants {
       case DECLARATION:
       case TYPE:
       case IS:
+      case CONSTANT:
       case AND:
+      case VARIABLE:
       case AS:
+      case INTEGER:
+      case REAL:
+      case STRING:
+      case LOGIC:
       case DESIGNATE:
       case READ:
       case WRITE:
       case ALL:
       case REPEAT:
+      case AVALIATE:
+      case RESULT:
+      case COLCH_ESQ:
+      case COLCH_DIR:
+      case PONTO:
+      case VIRGULA:
+      case PAREN_ESQ:
       case IGUAL:
       case DIFERENTE:
       case MENOR:
@@ -52,7 +65,6 @@ public class Gramatica20201 implements Gramatica20201Constants {
       case CINTEIRO:
       case CREAL:
       case IDENTIFICADOR:
-      case LEFT_PAREN:
         ;
         break;
       default:
@@ -72,13 +84,25 @@ public class Gramatica20201 implements Gramatica20201Constants {
     case DECLARATION:
     case TYPE:
     case IS:
+    case CONSTANT:
     case AND:
+    case VARIABLE:
     case AS:
+    case INTEGER:
+    case REAL:
+    case STRING:
+    case LOGIC:
     case DESIGNATE:
     case READ:
     case WRITE:
     case ALL:
     case REPEAT:
+    case AVALIATE:
+    case RESULT:
+    case COLCH_ESQ:
+    case COLCH_DIR:
+    case PONTO:
+    case VIRGULA:
     case IGUAL:
     case DIFERENTE:
     case MENOR:
@@ -102,10 +126,10 @@ public class Gramatica20201 implements Gramatica20201Constants {
     case IDENTIFICADOR:
       symbol();
       break;
-    case LEFT_PAREN:
-      jj_consume_token(LEFT_PAREN);
+    case PAREN_ESQ:
+      jj_consume_token(PAREN_ESQ);
       wff();
-      jj_consume_token(RIGHT_PAREN);
+      jj_consume_token(PAREN_DIR);
       break;
     default:
       jj_la1[1] = jj_gen;
@@ -149,13 +173,37 @@ public class Gramatica20201 implements Gramatica20201Constants {
       t = jj_consume_token(IS);
               resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
       break;
+    case CONSTANT:
+      t = jj_consume_token(CONSTANT);
+                    resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
+      break;
     case AND:
       t = jj_consume_token(AND);
                resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
       break;
+    case VARIABLE:
+      t = jj_consume_token(VARIABLE);
+                    resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
+      break;
     case AS:
       t = jj_consume_token(AS);
               resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
+      break;
+    case INTEGER:
+      t = jj_consume_token(INTEGER);
+                   resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
+      break;
+    case REAL:
+      t = jj_consume_token(REAL);
+                resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
+      break;
+    case STRING:
+      t = jj_consume_token(STRING);
+                  resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
+      break;
+    case LOGIC:
+      t = jj_consume_token(LOGIC);
+                 resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
       break;
     case DESIGNATE:
       t = jj_consume_token(DESIGNATE);
@@ -175,6 +223,14 @@ public class Gramatica20201 implements Gramatica20201Constants {
       break;
     case REPEAT:
       t = jj_consume_token(REPEAT);
+                  resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
+      break;
+    case AVALIATE:
+      t = jj_consume_token(AVALIATE);
+                    resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
+      break;
+    case RESULT:
+      t = jj_consume_token(RESULT);
                   resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" PALAVRA RESERVADA");
       break;
     case SOMA:
@@ -241,6 +297,22 @@ public class Gramatica20201 implements Gramatica20201Constants {
       t = jj_consume_token(NAO);
                resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" OPERADOR L\u00d3GICO");
       break;
+    case COLCH_ESQ:
+      t = jj_consume_token(COLCH_ESQ);
+                     resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+"SIMBOLO");
+      break;
+    case COLCH_DIR:
+      t = jj_consume_token(COLCH_DIR);
+                     resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" SIMBOLO");
+      break;
+    case PONTO:
+      t = jj_consume_token(PONTO);
+                 resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" SIMBOLO");
+      break;
+    case VIRGULA:
+      t = jj_consume_token(VIRGULA);
+                   resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" SIMBOLO");
+      break;
     case CLOGICA:
       t = jj_consume_token(CLOGICA);
                    resultado.add(t+" - Linha: "+t.beginLine+" - Coluna: "+(t.beginColumn-1)+" - Categoria: "+t.kind+" CONSTANTE L\u00d3GICA");
@@ -285,7 +357,7 @@ public class Gramatica20201 implements Gramatica20201Constants {
       jj_la1_0 = new int[] {0xfffffe00,0xfffffe00,0xfffffe00,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x6dff,0x6dff,0x2dff,};
+      jj_la1_1 = new int[] {0xb7fffef,0xb7fffef,0xb7fffe7,};
    }
 
   /** Constructor with InputStream. */
@@ -423,7 +495,7 @@ public class Gramatica20201 implements Gramatica20201Constants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[51];
+    boolean[] la1tokens = new boolean[64];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -440,7 +512,7 @@ public class Gramatica20201 implements Gramatica20201Constants {
         }
       }
     }
-    for (int i = 0; i < 51; i++) {
+    for (int i = 0; i < 64; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

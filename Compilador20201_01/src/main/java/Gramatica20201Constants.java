@@ -25,75 +25,101 @@ public interface Gramatica20201Constants {
   /** RegularExpression Id. */
   int IS = 15;
   /** RegularExpression Id. */
-  int AND = 16;
+  int CONSTANT = 16;
   /** RegularExpression Id. */
-  int AS = 17;
+  int AND = 17;
   /** RegularExpression Id. */
-  int DESIGNATE = 18;
+  int VARIABLE = 18;
   /** RegularExpression Id. */
-  int READ = 19;
+  int AS = 19;
   /** RegularExpression Id. */
-  int WRITE = 20;
+  int INTEGER = 20;
   /** RegularExpression Id. */
-  int ALL = 21;
+  int REAL = 21;
   /** RegularExpression Id. */
-  int REPEAT = 22;
+  int STRING = 22;
   /** RegularExpression Id. */
-  int IGUAL = 23;
+  int LOGIC = 23;
   /** RegularExpression Id. */
-  int DIFERENTE = 24;
+  int DESIGNATE = 24;
   /** RegularExpression Id. */
-  int MENOR = 25;
+  int READ = 25;
   /** RegularExpression Id. */
-  int MAIOR = 26;
+  int WRITE = 26;
   /** RegularExpression Id. */
-  int MENOR_IGUAL = 27;
+  int ALL = 27;
   /** RegularExpression Id. */
-  int MAIOR_IGUAL = 28;
+  int REPEAT = 28;
   /** RegularExpression Id. */
-  int SOMA = 29;
+  int AVALIATE = 29;
   /** RegularExpression Id. */
-  int SUBTRACAO = 30;
+  int RESULT = 30;
   /** RegularExpression Id. */
-  int MULTIPLICACAO = 31;
+  int COLCH_ESQ = 31;
   /** RegularExpression Id. */
-  int DIVISAO = 32;
+  int COLCH_DIR = 32;
   /** RegularExpression Id. */
-  int POTENCIA = 33;
+  int PONTO = 33;
   /** RegularExpression Id. */
-  int DIVISAO_INTEIRA = 34;
+  int VIRGULA = 34;
   /** RegularExpression Id. */
-  int DIVISAO_INTEIRA_RESTO = 35;
+  int PAREN_ESQ = 35;
   /** RegularExpression Id. */
-  int E = 36;
+  int PAREN_DIR = 36;
   /** RegularExpression Id. */
-  int OU = 37;
+  int IGUAL = 37;
   /** RegularExpression Id. */
-  int NAO = 38;
+  int DIFERENTE = 38;
   /** RegularExpression Id. */
-  int CLOGICA = 39;
+  int MENOR = 39;
   /** RegularExpression Id. */
-  int CLITERAL = 40;
+  int MAIOR = 40;
   /** RegularExpression Id. */
-  int ASCIIC = 41;
+  int MENOR_IGUAL = 41;
   /** RegularExpression Id. */
-  int CINTEIRO = 42;
+  int MAIOR_IGUAL = 42;
   /** RegularExpression Id. */
-  int CREAL = 43;
+  int SOMA = 43;
   /** RegularExpression Id. */
-  int DIGITO = 44;
+  int SUBTRACAO = 44;
   /** RegularExpression Id. */
-  int IDENTIFICADOR = 45;
+  int MULTIPLICACAO = 45;
   /** RegularExpression Id. */
-  int LEFT_PAREN = 46;
+  int DIVISAO = 46;
   /** RegularExpression Id. */
-  int RIGHT_PAREN = 47;
+  int POTENCIA = 47;
   /** RegularExpression Id. */
-  int DIGIT = 48;
+  int DIVISAO_INTEIRA = 48;
   /** RegularExpression Id. */
-  int LETTER = 49;
+  int DIVISAO_INTEIRA_RESTO = 49;
   /** RegularExpression Id. */
-  int SIMBOLO = 50;
+  int E = 50;
+  /** RegularExpression Id. */
+  int OU = 51;
+  /** RegularExpression Id. */
+  int NAO = 52;
+  /** RegularExpression Id. */
+  int CLOGICA = 53;
+  /** RegularExpression Id. */
+  int CLITERAL = 54;
+  /** RegularExpression Id. */
+  int ASCIIC = 55;
+  /** RegularExpression Id. */
+  int CINTEIRO = 56;
+  /** RegularExpression Id. */
+  int CREAL = 57;
+  /** RegularExpression Id. */
+  int DIGITO = 58;
+  /** RegularExpression Id. */
+  int IDENTIFICADOR = 59;
+  /** RegularExpression Id. */
+  int DIGIT = 60;
+  /** RegularExpression Id. */
+  int LETTER = 61;
+  /** RegularExpression Id. */
+  int SIMBOLO = 62;
+  /** RegularExpression Id. */
+  int EPSILON = 63;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -118,13 +144,27 @@ public interface Gramatica20201Constants {
     "\"declaration\"",
     "\"type\"",
     "\"is\"",
+    "\"constant\"",
     "\"and\"",
+    "\"variable\"",
     "\"as\"",
+    "\"integer\"",
+    "\"real\"",
+    "\"string\"",
+    "\"logic\"",
     "\"designate\"",
     "\"read\"",
     "\"write\"",
     "\"all\"",
     "\"repeat\"",
+    "\"avaliate\"",
+    "\"result\"",
+    "\"[\"",
+    "\"]\"",
+    "\".\"",
+    "\",\"",
+    "\"(\"",
+    "\")\"",
     "\"==\"",
     "\"!=\"",
     "\"<<\"",
@@ -148,11 +188,10 @@ public interface Gramatica20201Constants {
     "<CREAL>",
     "<DIGITO>",
     "<IDENTIFICADOR>",
-    "\"(\"",
-    "\")\"",
     "<DIGIT>",
     "<LETTER>",
     "\"_\"",
+    "\"\"",
   };
 
 }
