@@ -1,0 +1,404 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */
+options {
+IGNORE_CASE = false;
+ static = true;
+}
+
+PARSER_BEGIN(Grammar20201)package br.com.compiladores;
+
+public class Grammar20201{  public static void main(String args []) throws ParseException  {    Grammar20201 parser = new Grammar20201(System.in);    while (true)    {      System.out.println("Reading from standard input...");      System.out.print("Entre com o código: ");      try      {        switch (Grammar20201.one_line())        {          case 0 :           System.out.println("OK.");          break;          case 1 :           System.out.println("Goodbye.");          break;          default :           break;        }      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());        Grammar20201.ReInit(System.in);      }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(Grammar20201)SKIP :
+{
+  " "
+| "\r"
+| "\t"
+| "\n"
+| "/*" : COMENTARIO_BLOCO
+}
+
+<COMENTARIO_BLOCO> SKIP:
+{
+  "*/" : DEFAULT
+| < ~[]>
+}
+
+SPECIAL_TOKEN : {
+< COMENTARIO_LINHA: "//"(~["\n","\r"])* ("\n"|"\r"|"\r\n")? > }
+
+
+//PALAVRAS RESERVADAS
+TOKEN :
+{
+ <DO: "do">
+|  <THIS: "this">
+|  <BODY: "body">
+|  <DESCRIPTION: "description">
+|  <DECLARATION: "declaration">
+|  <TYPE: "type">
+|  <IS: "is">
+|  <CONSTANT: "constant">
+|  <AND: "and">
+|  <VARIABLE: "variable">
+|  <AS: "as">
+|  <INTEGER: "integer">
+|  <REAL: "real">
+|  <STRING: "string">
+|  <LOGIC: "logic">
+|  <DESIGNATE: "designate">
+|  <READ: "read">
+|  <WRITE: "write">
+|  <ALL: "all">
+|  <REPEAT: "repeat">
+|  <AVALIATE: "avaliate">
+|  <RESULT: "result">
+|  <TRUE: "true" >
+|  <UNTRUE: "untrue"> 
+}
+
+
+TOKEN : /* SIMBOLOS ESPECIAIS */
+{ 
+  < COLCH_ESQ : "[" >
+| < COLCH_DIR : "]" >
+| < PONTO : "." >
+| < VIRG : "," >
+| < PAREN_ESQ : "(" >
+| < PAREN_DIR : ")" >
+}
+
+
+TOKEN : /* OPERADORES RELACIONAIS */
+{ 
+  < IGUAL : "==" >
+| < DIFERENTE : "!=" >
+| < MENOR : "<<" >
+| < MAIOR : ">>" >
+| < MENOR_IGUAL : "<<==" >
+| < MAIOR_IGUAL : ">>==" >
+| < IGUAL_DEC : "=" >
+}
+
+
+TOKEN : /* OPERATORS */
+{
+  < SOMA : "+" >
+| < SUBTRACAO : "-" >
+| < MULTIPLICACAO : "*" >
+| < DIVISAO : "/" >
+| < POTENCIA : "**" >
+| < DIVISAO_INTEIRA : "%" >
+| < DIVISAO_INTEIRA_RESTO : "%%" >
+}
+
+
+TOKEN : /* OPERADORES LOGICOS */
+{ 
+  < E : "&" >
+| < OU : "|" >
+| < NAO : "!" >
+}
+
+
+TOKEN :
+{ 
+< CLITERAL: "\""<ASCIIC>"\"" | "'"<ASCIIC>"'">
+| <#ASCIIC : ( ~["\"","\\","\n","\r"] | "\\" ( ["n","t","b","r","f","\\","\'","\""] | ( ["\n","\r"] | "\r\n")))* >
+}
+
+
+TOKEN : /* CONSTANTES NUMERICAS */
+{	
+  <CINTEIRO: (<DIGITO>|<DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO>)>
+| <CREAL:	((<DIGITO>|<DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO><DIGITO><DIGITO>)<PONTO>
+				(<DIGITO>|<DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO>))>
+|<#DIGITO: ["0"-"9"]>
+}
+
+
+TOKEN :
+{
+    < IDENTIFICADOR : (<LETTER><DIGIT>(< LETTER >|< SIMBOLO >) | < LETTER > | < LETTER > (<SIMBOLO >)* )+ >
+}
+
+
+TOKEN :
+{
+  <#DIGIT: ["0"-"9"]>
+| <#LETTER: ["a"-"z", "A"-"Z"]>
+| <#SIMBOLO: "_" >
+}
+
+
+
+
+int one_line() :{}{   Programa()  {    return 0;  }  {    return 1;  }}
+
+//declaracao do corpo do programa
+void Programa(): {} /*teste1: do this meupograma[] declaration type[idenum is id,id.]
+					declaration constant and variable
+					[as constant ida,idb is integer = 10.
+					 as variable ida[10],id is string.]  body[ read this[identificador]] description "comentario"*/
+{
+  <DO><THIS> <IDENTIFICADOR> <COLCH_ESQ> <COLCH_DIR>
+  		DecTpEnum() DeclarationConstantAndVariable()
+  		<BODY> <COLCH_ESQ> ListaDeComandos() <COLCH_DIR>
+  		Description()  			
+}
+
+
+// dec lista de comandos
+void ListaDeComandos(): {}
+{
+  Comandos() ListaDeComandosl()
+}
+void ListaDeComandosl(): {}
+{
+  Comandos() ListaDeComandosl() | {}
+} 
+void Comandos(): { }
+{ ComandoAtribuicao()
+| ComandoEntradaDados()
+| ComandoSaidaDados()
+| ComandoSelecao()
+| ComandoRepeticao()
+}
+
+
+//dec de comandos de repeticao
+void ComandoRepeticao(): {}
+{
+	<REPEAT> <THIS> Expressao() <COLCH_ESQ> ListaDeComandos() <COLCH_DIR>
+}
+
+
+//dec de comandos de comandos de seleção
+void ComandoSelecao(): { }
+{
+  <AVALIATE> <THIS> Expressao() AlternanciaResultado() <PONTO> 
+}
+void AlternanciaResultado(): { }
+{
+	LinhaTrue() AlternanciaResultadol()
+  | LinhaUntrue() AlternanciaResultadol()
+}
+void AlternanciaResultadol(): { }
+{
+	LinhaTrue() | LinhaUntrue()
+}
+void LinhaTrue(): {}
+{
+    <TRUE> <RESULT> <COLCH_ESQ> ListaDeComandos() <COLCH_DIR>
+}
+void LinhaUntrue(): {}
+{
+    <UNTRUE> <RESULT> <COLCH_ESQ> ListaDeComandos() <COLCH_DIR>
+}
+
+
+// dec comando de saida de dados
+void ComandoSaidaDados(): { }
+{
+  <WRITE> LinhasWrhiters() {/*fazer fatoracao apra  LinhaWriteAll() | LinhaWrite()*/} 
+}
+void LinhasWrhiters(): {}
+{
+  LinhaWriteAll()|LinhaWrite()
+}
+void LinhaWriteAll(): {}
+{
+  <ALL> <THIS> <COLCH_ESQ> ListaDeIdentificadores() <COLCH_DIR> <PONTO>
+}
+void LinhaWrite(): {}
+{
+  <THIS> <COLCH_ESQ> ListaDeIdentificadores() <COLCH_DIR> <PONTO>
+}
+
+
+// dec comando de entrada de dados
+void ComandoEntradaDados(): { }
+{
+  <READ> <THIS> <COLCH_ESQ> ListaDeIdentificadores() <COLCH_DIR>
+}
+void ComandoAtribuicao(): {}
+{
+  <DESIGNATE> <THIS> ListaDeIdentificadores() <AS> Expressao()
+}
+
+
+// declaracao de variaiveis e constantes
+
+void DeclarationConstantAndVariable(): { }
+{
+  <DECLARATION> <CONSTANT> <AND> <VARIABLE> <COLCH_ESQ> DecConstEVar() <COLCH_DIR>
+}
+
+
+void DecConstEVar(): {}
+{
+  LOOKAHEAD(2) DecAsConstant() DecAsVariable() | LOOKAHEAD(2) DecAsVariable() DecAsConstant() | LOOKAHEAD(2) DecAsVariable() | LOOKAHEAD(2) DecAsConstant() | {} 
+}
+
+ 
+
+void DecAsConstant(): { }
+{
+  <AS> <CONSTANT> ListaDecAsConstant()
+}
+
+
+void ListaDecAsConstant(): { }
+{
+  (ListaDeIdentificadores() <IS> TipoConst() <IGUAL_DEC> Valor() <PONTO>) ListaDecAsConstantl()  
+}
+void ListaDecAsConstantl(): { }
+{
+  (ListaDeIdentificadores() <IS> TipoConst() <IGUAL_DEC> Valor() <PONTO>) ListaDecAsConstantl()| {}
+}
+void TipoConst(): { }
+{
+  <INTEGER>|<REAL>|<STRING>|<LOGIC>
+}
+
+
+void DecAsVariable(): { }
+{
+	<AS><VARIABLE> ListaDecAsVariable() 
+}
+void ListaDecAsVariable(): {}
+{
+	(ListaDeIdentificadoresVet() <IS> TipoVar() <PONTO>) ListaDecAsVariablel()
+}
+void ListaDecAsVariablel(): {}
+{
+  (ListaDeIdentificadoresVet() <IS> TipoVar() <PONTO>) ListaDecAsVariablel()| {}
+}
+
+void TipoVar(): { }
+{
+  <INTEGER>|<REAL>|<STRING>|<LOGIC> {/* arrumar acrescentar o enum */ }
+}
+
+void Valor(): { }
+{
+  <CINTEIRO>|<CREAL>|<CLITERAL>
+}
+void IsVetor(): { }
+{
+  <COLCH_ESQ><CINTEIRO><COLCH_DIR> | {}
+}
+
+
+
+
+// dec description do corpo do programa
+void Description(): {/*teste: description "constante literal qualquer" */ }
+{
+	<DESCRIPTION> <CLITERAL> | {}
+}
+
+
+// declaracao tipo enumerado
+void DecTpEnum(): { /*teste: declaration type [idea is idb,idv,idb. idc is ida,id.]*/ }
+{
+	<DECLARATION> <TYPE> <COLCH_ESQ> LinhasDeclarationType() <COLCH_DIR>  | {}
+}
+void LinhaDeclarationType(): { /* teste: idea is idb,idv,idb.*/ }
+{
+  <IDENTIFICADOR> <IS> ListaDeIdentificadores() <PONTO>
+}
+void LinhasDeclarationType(): { }
+{
+	LinhaDeclarationType() LinhasDeclarationTypel()
+}
+void LinhasDeclarationTypel() : {}
+{
+   LinhaDeclarationType() ListaDeIdentificadoresl() | {} 
+}
+
+
+// decalaracao lista de identificadores
+void ListaDeIdentificadores(): { }
+{
+  <IDENTIFICADOR> ListaDeIdentificadoresl()}
+void ListaDeIdentificadoresl() : {}
+{
+  <VIRG><IDENTIFICADOR> ListaDeIdentificadoresl() | {} 
+}
+
+
+// dec lista de identificadores com vetor
+void ListaDeIdentificadoresVet(): { }
+{
+  <IDENTIFICADOR> IsVector() ListaDeIdentificadoresVetl()
+}
+void ListaDeIdentificadoresVetl() : {}
+{
+  <VIRG> <IDENTIFICADOR> IsVector() ListaDeIdentificadoresVetl() | { }
+}
+void IsVector(): { }
+{
+	<COLCH_ESQ> <CINTEIRO> <COLCH_DIR> | {}
+}
+
+
+// declaracao de expressao
+void Expressao(): { }
+{
+	ExpressaoAtitmeticaOuLogica() Expressaol() 
+}
+void Expressaol(): {}
+{
+	ExpressaoAtitmeticaOuLogica() | <IGUAL> ExpressaoAtitmeticaOuLogica()
+								  | <DIFERENTE> ExpressaoAtitmeticaOuLogica()
+								  | <MENOR> ExpressaoAtitmeticaOuLogica()
+								  | <MAIOR> ExpressaoAtitmeticaOuLogica()
+								  | <MENOR_IGUAL> ExpressaoAtitmeticaOuLogica()
+								  | <MAIOR_IGUAL> ExpressaoAtitmeticaOuLogica()
+								  | {}
+}
+void ExpressaoAtitmeticaOuLogica(): { }
+{
+  Termo2() MenorPrioridade()
+}
+void MenorPrioridade(): { }
+{
+  <SOMA> Termo2() MenorPrioridade()
+  | <SUBTRACAO> Termo2() MenorPrioridade()
+  | <OU> Termo2() MenorPrioridade() <OU> | {}   
+}
+void Termo2(): {}
+{
+	Termo1() MediaPrioridade()
+}
+void MediaPrioridade(): { }
+{
+	<MULTIPLICACAO> Termo1() MediaPrioridade()
+|   <DIVISAO> Termo1() MediaPrioridade()
+|   <DIVISAO_INTEIRA> Termo1() MediaPrioridade()
+|   <DIVISAO_INTEIRA_RESTO> Termo1() MediaPrioridade()
+|   <E> Termo1() MediaPrioridade()
+|   {}
+}
+void Termo1(): { }
+{
+  Elemento() MaiorPrioridade()	
+}
+void MaiorPrioridade(): { }
+{
+  <POTENCIA> Elemento() MaiorPrioridade() | {}
+}
+void Elemento(): { }
+{
+  <IDENTIFICADOR> Indice()
+| <CINTEIRO>
+| <CREAL>
+| <CLITERAL>
+| <TRUE>|<UNTRUE>
+| <PAREN_ESQ> Expressao() <PAREN_DIR>
+| <NAO> <PAREN_ESQ> Expressao() <PAREN_DIR>
+}
+void Indice():{}
+{
+  <CINTEIRO> | {}
+}

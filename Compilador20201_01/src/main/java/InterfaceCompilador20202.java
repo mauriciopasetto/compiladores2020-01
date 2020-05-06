@@ -16,8 +16,12 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.html.parser.Element;
 import javax.swing.JButton;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import java.awt.Dimension;
+import javax.swing.JToolBar;
 
-public class InterfaceCompilador20201 extends JFrame {
+public class InterfaceCompilador20202 extends JFrame {
 	
 	private static Gramatica20201 parser = null;
 	private static JTextArea textAreaINPUT;
@@ -33,7 +37,7 @@ public class InterfaceCompilador20201 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfaceCompilador20201 frame = new InterfaceCompilador20201();
+					InterfaceCompilador20202 frame = new InterfaceCompilador20202();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,9 +49,24 @@ public class InterfaceCompilador20201 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InterfaceCompilador20201() {
+	public InterfaceCompilador20202() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 566);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("File");
+		mntmNewMenuItem_1.setMaximumSize(new Dimension(100, 32767));
+		menuBar.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Edit");
+		mntmNewMenuItem.setMaximumSize(new Dimension(100, 32767));
+		menuBar.add(mntmNewMenuItem);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Complilation");
+		mntmNewMenuItem_2.setMaximumSize(new Dimension(150, 32767));
+		menuBar.add(mntmNewMenuItem_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -149,6 +168,10 @@ public class InterfaceCompilador20201 extends JFrame {
 	    JButton btnLimpar = new JButton("LIMPAR");
 	    btnLimpar.setBounds(126, 339, 114, 23);
 	    contentPane.add(btnLimpar);
+	    
+	    JToolBar toolBar = new JToolBar();
+	    toolBar.setBounds(5, 1, 869, 23);
+	    contentPane.add(toolBar);
 	    btnLimpar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {

@@ -1,0 +1,151 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */options{  static = true;}PARSER_BEGIN(Grammar20201)package br.com.compiladores;
+
+
+public class Grammar20201{
+public static List<String> resultado = new ArrayList<String >();  }PARSER_END(Grammar20201)SKIP :
+{
+  " "
+| "\r"
+| "\t"
+| "\n"
+| "/*" : COMENTARIO_BLOCO
+}
+
+<COMENTARIO_BLOCO> SKIP:
+{
+  "*/" : DEFAULT
+| < ~[]>
+}
+
+SPECIAL_TOKEN : {
+< COMENTARIO_LINHA: "//"(~["\n","\r"])* ("\n"|"\r"|"\r\n")? > }
+
+
+//PALAVRAS RESERVADAS
+TOKEN :
+{
+ <DO: "do">
+|  <THIS: "this">
+|  <BODY: "body">
+|  <DESCRIPTION: "description">
+|  <DECLARATION: "declaration">
+|  <TYPE: "type">
+|  <IS: "is">
+|  <CONSTANT: "constant">
+|  <AND: "and">
+|  <VARIABLE: "variable">
+|  <AS: "as">
+|  <INTEGER: "integer">
+|  <REAL: "real">
+|  <STRING: "string">
+|  <LOGIC: "logic">
+|  <DESIGNATE: "designate">
+|  <READ: "read">
+|  <WRITE: "write">
+|  <ALL: "all">
+|  <REPEAT: "repeat">
+|  <AVALIATE: "avaliate">
+|  <RESULT: "result">
+}
+
+
+TOKEN : /* SIMBOLOS ESPECIAIS */
+{ 
+  < COLCH_ESQ : "[" >
+| < COLCH_DIR : "]" >
+| < PONTO : "." >
+| < VIRG : "," >
+| < PAREN_ESQ : "(" >
+| < PAREN_DIR : ")" >
+}
+
+
+TOKEN : /* OPERADORES RELACIONAIS */
+{ 
+  < IGUAL : "==" >
+| < DIFERENTE : "!=" >
+| < MENOR : "<<" >
+| < MAIOR : ">>" >
+| < MENOR_IGUAL : "<<==" >
+| < MAIOR_IGUAL : ">>==" >
+}
+
+
+TOKEN : /* OPERATORS */
+{
+  < SOMA : "+" >
+| < SUBTRACAO : "-" >
+| < MULTIPLICACAO : "*" >
+| < DIVISAO : "/" >
+| < POTENCIA : "**" >
+| < DIVISAO_INTEIRA : "%" >
+| < DIVISAO_INTEIRA_RESTO : "%%" >
+}
+
+
+TOKEN : /* OPERADORES LOGICOS */
+{ 
+  < E : "&" >
+| < OU : "|" >
+| < NAO : "!" >
+}
+
+
+TOKEN : { /* CONSTANTE LOGICA*/
+  <CLOGICA: "true" | "untrue">
+}
+
+
+TOKEN :
+{ 
+< CLITERAL: "\""<ASCIIC>"\"" | "'"<ASCIIC>"'">
+| <#ASCIIC : ( ~["\"","\\","\n","\r"] | "\\" ( ["n","t","b","r","f","\\","\'","\""] | ( ["\n","\r"] | "\r\n")))* >
+}
+
+
+TOKEN : /* CONSTANTES NUMERICAS */
+{	
+  <CINTEIRO: (<DIGITO>|<DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO>)>
+| <CREAL:	((<DIGITO>|<DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO><DIGITO><DIGITO>)<PONTO>
+				(<DIGITO>|<DIGITO><DIGITO>|<DIGITO><DIGITO><DIGITO>))>
+|<#DIGITO: ["0"-"9"]>
+}
+
+
+TOKEN :
+{
+  < IDENTIFICADOR :  ( (<LETTER>)+ ( <SIMBOLO>(<LETTER>)+ | <DIGITO>((<LETTER>)+|<SIMBOLO>) | (<LETTER>)*  )* ((<SIMBOLO>)|(<LETTER>)|<EPSILON>)  ) >
+}
+
+TOKEN :
+{
+  <#DIGIT: ["0"-"9"]>
+| <#LETTER: ["a"-"z", "A"-"Z"]>
+| <#SIMBOLO: "_" >
+| <#EPSILON:"" >
+}
+
+TOKEN :
+{
+  <EMPTY: ~[] >
+}
+
+
+int one_line() : {}{
+	(ListaDeIdentificadores()) 
+  {    return 0;  }|   {    return 1;  }}
+void ListaDeIdentificadores():
+{}
+{
+    <IDENTIFICADOR> ListaDeIdentificadoresl()
+}
+
+void ListaDeIdentificadoresl(): {}
+{
+  (<VIRG> <IDENTIFICADOR> ListaDeIdentificadoresl()) | <EMPTY> 
+}
+
+
+
