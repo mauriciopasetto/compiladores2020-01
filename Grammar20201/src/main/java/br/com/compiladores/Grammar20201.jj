@@ -179,13 +179,21 @@ void ComandoSelecao(): { }
 }
 void AlternanciaResultado(): { }
 {
-	LinhaTrue() AlternanciaResultadol()
-  | LinhaUntrue() AlternanciaResultadol()
+	LinhaTrue() LinhaUntruel()
+  | LinhaUntrue() LinhaTruel()
 }
-void AlternanciaResultadol(): { }
+
+void LinhaUntruel(): { }
 {
-	LinhaTrue() | LinhaUntrue()
+  LinhaUntrue() | {}
 }
+
+void LinhaTruel(): { }
+{
+   LinhaTrue() | {}
+}
+
+
 void LinhaTrue(): {}
 {
     <TRUE> <RESULT> <COLCH_ESQ> ListaDeComandos() <COLCH_DIR>
@@ -199,30 +207,34 @@ void LinhaUntrue(): {}
 // dec comando de saida de dados
 void ComandoSaidaDados(): { }
 {
-  <WRITE> LinhasWrhiters() {/*fazer fatoracao apra  LinhaWriteAll() | LinhaWrite()*/} 
+  <WRITE> LinhasWriters()  
 }
-void LinhasWrhiters(): {}
+void LinhasWriters(): {}
 {
   LinhaWriteAll()|LinhaWrite()
 }
 void LinhaWriteAll(): {}
 {
-  <ALL> <THIS> <COLCH_ESQ> ListaDeIdentificadores() <COLCH_DIR> <PONTO>
+  <ALL> <THIS> <COLCH_ESQ> ListaDeIdentificadoresVet() <COLCH_DIR> <PONTO>
 }
 void LinhaWrite(): {}
 {
-  <THIS> <COLCH_ESQ> ListaDeIdentificadores() <COLCH_DIR> <PONTO>
+  <THIS> <COLCH_ESQ> ListaDeIdentificadoresVet() <COLCH_DIR> <PONTO>
 }
+
 
 
 // dec comando de entrada de dados
 void ComandoEntradaDados(): { }
 {
-  <READ> <THIS> <COLCH_ESQ> ListaDeIdentificadores() <COLCH_DIR>
+  <READ> <THIS> <COLCH_ESQ> ListaDeIdentificadoresVet() <COLCH_DIR>
 }
+
+
+// dec comando de atribuicao
 void ComandoAtribuicao(): {}
 {
-  <DESIGNATE> <THIS> ListaDeIdentificadores() <AS> Expressao()
+  <DESIGNATE> <THIS> ListaDeIdentificadoresVet() <AS> Expressao()
 }
 
 
@@ -233,17 +245,24 @@ void DeclarationConstantAndVariable(): { }
   <DECLARATION> <CONSTANT> <AND> <VARIABLE> <COLCH_ESQ> DecConstEVar() <COLCH_DIR>
 }
 
-
 void DecConstEVar(): {}
 {
-  LOOKAHEAD(2) DecAsConstant() DecAsVariable() | LOOKAHEAD(2) DecAsVariable() DecAsConstant() | LOOKAHEAD(2) DecAsVariable() | LOOKAHEAD(2) DecAsConstant() | {} 
+  <AS> DecConstEVarl() | {}
 }
 
- 
+void DecConstEVarl(): {}
+{
+  <CONSTANT> ListaDecAsConstant() DecAsVariable() | <VARIABLE> ListaDecAsVariable() DecAsConstant() 
+}
+
 
 void DecAsConstant(): { }
 {
-  <AS> <CONSTANT> ListaDecAsConstant()
+  <AS> <CONSTANT> ListaDecAsConstant()| {}
+}
+void DecAsVariable(): { }
+{
+  <AS> <VARIABLE> ListaDecAsVariable()| {} 
 }
 
 
@@ -255,20 +274,19 @@ void ListaDecAsConstantl(): { }
 {
   (ListaDeIdentificadores() <IS> TipoConst() <IGUAL_DEC> Valor() <PONTO>) ListaDecAsConstantl()| {}
 }
+
+
 void TipoConst(): { }
 {
   <INTEGER>|<REAL>|<STRING>|<LOGIC>
 }
 
 
-void DecAsVariable(): { }
-{
-	<AS><VARIABLE> ListaDecAsVariable() 
-}
 void ListaDecAsVariable(): {}
 {
 	(ListaDeIdentificadoresVet() <IS> TipoVar() <PONTO>) ListaDecAsVariablel()
 }
+
 void ListaDecAsVariablel(): {}
 {
   (ListaDeIdentificadoresVet() <IS> TipoVar() <PONTO>) ListaDecAsVariablel()| {}
@@ -325,6 +343,7 @@ void ListaDeIdentificadoresl() : {}
 {
   <VIRG><IDENTIFICADOR> ListaDeIdentificadoresl() | {} 
 }
+
 
 
 // dec lista de identificadores com vetor
