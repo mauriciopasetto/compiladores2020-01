@@ -4,38 +4,40 @@ package br.com.compiladores;
 public class Grammar20201 implements Grammar20201Constants {
   public static void main(String args []) throws ParseException
   {
-    Grammar20201 parser = new Grammar20201(System.in);
-    while (true)
-    {
-      System.out.println("Reading from standard input...");
-      System.out.print("Entre com o c\u00f3digo: ");
-      try
-      {
-        switch (Grammar20201.one_line())
-        {
-          case 0 :
-          System.out.println("OK.");
-          break;
-          case 1 :
-          System.out.println("Goodbye.");
-          break;
-          default :
-          break;
-        }
-      }
-      catch (Exception e)
-      {
-        System.out.println("NOK.");
-        System.out.println(e.getMessage());
-        Grammar20201.ReInit(System.in);
-      }
-      catch (Error e)
-      {
-        System.out.println("Oops.");
-        System.out.println(e.getMessage());
-        break;
-      }
-    }
+//    Grammar20201 parser = new Grammar20201(System.in);
+//    while (true)
+//    {
+//      System.out.println("Reading from standard input...");
+//      System.out.print("Entre com o c\u00f3digo: ");
+//      try
+//      {
+//        switch (Grammar20201.one_line())
+//        {
+//          case 0 :
+//          System.out.println("OK.");
+//          break;
+//          case 1 :
+//          System.out.println("Goodbye.");
+//          break;
+//          default :
+//          break;
+//        }
+//      }
+//      catch (Exception e)
+//      {
+//        System.out.println("NOK.");
+//        System.out.println(e.getMessage());
+//        Grammar20201.ReInit(System.in);
+//      }
+//      catch (Error e)
+//      {
+//        System.out.println("Oops.");
+//        System.out.println(e.getMessage());
+//        break;
+//      }
+//    }
+	  Interface tela = new Interface();
+	  tela.setVisible(true);
   }
 
   static final public int one_line() throws ParseException {
