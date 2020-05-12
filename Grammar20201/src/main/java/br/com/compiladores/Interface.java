@@ -62,6 +62,16 @@ public class Interface extends JFrame {
 		
 		JMenuItem newAction = new JMenuItem("New");
 		JMenuItem openAction = new JMenuItem("Open");
+		openAction.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				File file = selectFile();
+				if (file != null) {
+					textAreaINPUT.setText(lerArquivo(file));
+				}
+				
+			}
+		});
 		JMenuItem saveAction = new JMenuItem("Save");
 		fileMenu.add(newAction);
 		fileMenu.add(openAction);
