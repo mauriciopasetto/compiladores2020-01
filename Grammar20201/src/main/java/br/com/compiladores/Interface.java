@@ -8,14 +8,17 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -35,6 +38,9 @@ public class Interface extends JFrame {
 	private JScrollPane jsp;
 	private JPanel contentPane;
 	private static JTextArea textAreaOUTPUT;
+	private File actualFile;
+	private String textFileTemp;
+	
 
 
 
@@ -47,6 +53,8 @@ public class Interface extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		actualFile = null;
+		textFileTemp = null;
 		
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -61,6 +69,11 @@ public class Interface extends JFrame {
 		menuBar.add(compilationMenu);
 		
 		JMenuItem newAction = new JMenuItem("New");
+		newAction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				newAction();
+			}
+		});
 		JMenuItem openAction = new JMenuItem("Open");
 		openAction.addActionListener(new ActionListener() {
 			
@@ -73,13 +86,33 @@ public class Interface extends JFrame {
 			}
 		});
 		JMenuItem saveAction = new JMenuItem("Save");
+		saveAction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				saveFile();
+			}
+		});
 		fileMenu.add(newAction);
 		fileMenu.add(openAction);
 		fileMenu.add(saveAction);
 		
 		JMenuItem cutAction = new JMenuItem("Cut");
+		cutAction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textAreaINPUT.cut();
+			}
+		});
 		JMenuItem copyAction = new JMenuItem("Copy");
+		copyAction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textAreaINPUT.copy();
+			}
+		});
 		JMenuItem pasteAction = new JMenuItem("Paste");
+		pasteAction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textAreaINPUT.paste();
+			}
+		});
 		editMenu.add(cutAction);
 		editMenu.add(copyAction);
 		editMenu.add(pasteAction);
@@ -89,17 +122,12 @@ public class Interface extends JFrame {
 		compilationMenu.add(compileAction);
 		compilationMenu.add(runAction);
 		
-		
-		
-		
-		// INI customizacao do text area para mostrar linhas e atualizar o componente
 		jsp = new JScrollPane();
 		jsp.setBounds(5, 50, 870, 300);
 	    textAreaINPUT = new JTextArea();
 	    lines = new JTextArea("1");
 	    lines.setBackground(Color.LIGHT_GRAY);
 	    lines.setEditable(false);
-	    //  codigo para implementar numero de linhas no JTextArea
 	    textAreaINPUT.getDocument().addDocumentListener(new DocumentListener() {
 	    	public String getText() {
 	            int caretPosition = textAreaINPUT.getDocument().getLength();
@@ -111,15 +139,12 @@ public class Interface extends JFrame {
 	            return text;
 	         }
 			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
 				lines.setText(getText());
 			}
 			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
 				lines.setText(getText());
 			}
 			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
 				lines.setText(getText());
 			}
 		}); 
@@ -134,11 +159,18 @@ public class Interface extends JFrame {
 	    
 	    JScrollPane sp = new JScrollPane(textAreaOUTPUT);
 	    sp.setBounds(5, 373, 870, 138);
+	    sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	    contentPane.add(sp);
 
 	    JButton btnNew = new JButton(new ImageIcon("images/new.png"));
 	    btnNew.setBounds(5, 5, 30, 30);
 	    contentPane.add(btnNew);
+	    
+	    btnNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				newAction();
+			}
+		});
 	    
 	    JButton btnOpen = new JButton(new ImageIcon("images/open.png"));
 	    btnOpen.setBounds(38, 5, 30, 30);
@@ -158,17 +190,41 @@ public class Interface extends JFrame {
 	    btnSave.setBounds(71, 5, 30, 30);
 	    contentPane.add(btnSave);
 	    
+	    btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				saveFile();
+			}
+		});
+	    
 	    JButton btnCut = new JButton(new ImageIcon("images/cut.png"));
 	    btnCut.setBounds(110, 5, 30, 30);
 	    contentPane.add(btnCut);
+	    
+	    btnCut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textAreaINPUT.cut();
+			}
+		});
 	    
 	    JButton btnCopy = new JButton(new ImageIcon("images/copy.png"));
 	    btnCopy.setBounds(143, 5, 30, 30);
 	    contentPane.add(btnCopy);
 	    
+	    btnCopy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textAreaINPUT.copy();
+			}
+		});
+	    
 	    JButton btnPaste = new JButton(new ImageIcon("images/paste.png"));
 	    btnPaste.setBounds(176, 5, 30, 30);
 	    contentPane.add(btnPaste);
+	    
+	    btnPaste.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textAreaINPUT.paste();
+			}
+		});
 	    
 	    JButton btnCompiler = new JButton(new ImageIcon("images/compiler.png"));
 	    btnCompiler.setBounds(215, 5, 30, 30);
@@ -183,60 +239,11 @@ public class Interface extends JFrame {
 	    btnCompiler.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				String sentence = textAreaINPUT.getText();
-                // Put parens around sentence so that parser knows scope
-//                sentence = "(" + sentence + ")";
-                InputStream is = new ByteArrayInputStream(sentence.getBytes());
-                if(parser == null) parser = new Grammar20201(is);
-                else Grammar20201.ReInit(is);
-                try
-                {
-                  switch (Grammar20201.one_line())
-                  {
-                    case 0 :   
-//                    	for (int i = Grammar20201.resultado.size()-1; i >= 0; i--){
-//                    		textAreaOUTPUT.setText(Grammar20201.resultado.get(i)+"\n"+textAreaOUTPUT.getText());
-//						}
-//                    	Grammar20201.resultado = new ArrayList<String>();
-                    	textAreaOUTPUT.setText("expression parsed ok.");
-                    break;
-                    default :
-                    break;
-                  }
-                }
-                catch (Exception e1)
-                {
-                  textAreaOUTPUT.setText("error in expression.\n"+
-                		  				e1.getMessage());
-                }
-                catch (Error e1)
-                {
-                 textAreaOUTPUT.setText("error in expression.\n"+
-    		  						   e1.getMessage());
-                }
-                finally
-                {
-                  
-                }
+				
+				compile();
 				
 			}
 		});
-	    
-	    
-//	    JButton btnLimpar = new JButton("LIMPAR");
-//	    btnLimpar.setBounds(236, 18, 114, 23);
-//	    contentPane.add(btnLimpar);
-//	    btnLimpar.addActionListener(new ActionListener() {
-//			
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				textAreaINPUT.setText("");
-//				textAreaOUTPUT.setText("");
-//				
-//			}
-//		});
-	    
 	    
 	    
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -274,5 +281,77 @@ public class Interface extends JFrame {
 	          e.getMessage());
 	    }
 		return "";
+	}
+	
+	public void saveFile() {
+		if (actualFile == null) {
+			JFileChooser fileChooser = new JFileChooser();
+			int option = fileChooser.showSaveDialog(this);
+			if(option == JFileChooser.APPROVE_OPTION){
+				actualFile = fileChooser.getSelectedFile();
+			}
+		}
+		printFile();
+	}
+	
+	private void printFile() {
+		try {
+			FileWriter arq = new FileWriter(actualFile);
+			PrintWriter gravarArq = new PrintWriter(arq);
+			gravarArq.print(textAreaINPUT.getText());
+			arq.close();
+			textFileTemp = textAreaINPUT.getText();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void newAction() {
+		if (textFileTemp == null && textAreaINPUT.getText().isEmpty()) {
+			actualFile = null;
+			textFileTemp = null;
+		}else if (textFileTemp == null && !textAreaINPUT.getText().isEmpty()) {
+			int answer = JOptionPane.showConfirmDialog(this, "Save changes?", "Warning", JOptionPane.YES_NO_OPTION);
+			if (answer == JOptionPane.YES_OPTION) {
+				saveFile();
+				textAreaINPUT.setText("");
+				actualFile = null;
+				textFileTemp = null;
+			}
+		}else if ((textFileTemp != null && !textFileTemp.equals(textAreaINPUT.getText())) ) {
+			int answer = JOptionPane.showConfirmDialog(this, "Save changes?", "Warning", JOptionPane.YES_NO_OPTION);
+			if (answer == JOptionPane.YES_OPTION) {
+				saveFile();
+				textAreaINPUT.setText("");
+				actualFile = null;
+				textFileTemp = null;
+			}
+		}else {
+			textAreaINPUT.setText("");
+			actualFile = null;
+			textFileTemp = null;
+		}
+	}
+	
+	public void compile() {
+		String sentence = textAreaINPUT.getText();
+        InputStream is = new ByteArrayInputStream(sentence.getBytes());
+        if(parser == null) parser = new Grammar20201(is);
+        else Grammar20201.ReInit(is);
+        try{
+          switch (Grammar20201.one_line()){
+            case 0 :   
+            	textAreaOUTPUT.setText("expression parsed ok.");
+            break;
+            default :
+            break;
+          }
+        }catch (Exception e1){
+          textAreaOUTPUT.setText("error in expression.\n"+
+        		  				e1.getMessage());
+        }catch (Error e1){
+         textAreaOUTPUT.setText("error in expression.\n"+
+	  						   e1.getMessage());
+        }
 	}
 }
