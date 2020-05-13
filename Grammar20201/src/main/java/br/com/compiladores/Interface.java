@@ -357,7 +357,7 @@ public class Interface extends JFrame {
         try{
           switch (Grammar20201.one_line()){
             case 0 :   
-            	textAreaOUTPUT.setText("expression parsed ok.");
+            	textAreaOUTPUT.setText("Program compiled with success");
             break;
             default :
             break;
