@@ -4,40 +4,8 @@ package br.com.compiladores;
 public class Grammar20201 implements Grammar20201Constants {
   public static void main(String args []) throws ParseException
   {
-//    Grammar20201 parser = new Grammar20201(System.in);
-//    while (true)
-//    {
-//      System.out.println("Reading from standard input...");
-//      System.out.print("Entre com o c\u00f3digo: ");
-//      try
-//      {
-//        switch (Grammar20201.one_line())
-//        {
-//          case 0 :
-//          System.out.println("OK.");
-//          break;
-//          case 1 :
-//          System.out.println("Goodbye.");
-//          break;
-//          default :
-//          break;
-//        }
-//      }
-//      catch (Exception e)
-//      {
-//        System.out.println("NOK.");
-//        System.out.println(e.getMessage());
-//        Grammar20201.ReInit(System.in);
-//      }
-//      catch (Error e)
-//      {
-//        System.out.println("Oops.");
-//        System.out.println(e.getMessage());
-//        break;
-//      }
-//    }
-	  Interface tela = new Interface();
-	  tela.setVisible(true);
+     Interface tela = new Interface();
+         tela.setVisible(true);
   }
 
   static final public int one_line() throws ParseException {
@@ -117,6 +85,7 @@ public class Grammar20201 implements Grammar20201Constants {
     jj_consume_token(COLCH_ESQ);
     ListaDeComandos();
     jj_consume_token(COLCH_DIR);
+    jj_consume_token(PONTO);
   }
 
 //dec de comandos de comandos de seleção
@@ -187,6 +156,7 @@ public class Grammar20201 implements Grammar20201Constants {
   static final public void ComandoSaidaDados() throws ParseException {
     jj_consume_token(WRITE);
     LinhasWriters();
+    jj_consume_token(PONTO);
   }
 
   static final public void LinhasWriters() throws ParseException {
@@ -228,6 +198,7 @@ public class Grammar20201 implements Grammar20201Constants {
     jj_consume_token(COLCH_ESQ);
     ListaDeIdentificadoresVet();
     jj_consume_token(COLCH_DIR);
+    jj_consume_token(PONTO);
   }
 
 // dec comando de atribuicao
@@ -237,6 +208,7 @@ public class Grammar20201 implements Grammar20201Constants {
     ListaDeIdentificadoresVet();
     jj_consume_token(AS);
     Expressao();
+    jj_consume_token(PONTO);
   }
 
 // declaracao de variaiveis e constantes

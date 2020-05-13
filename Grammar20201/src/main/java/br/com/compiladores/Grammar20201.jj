@@ -8,7 +8,8 @@ IGNORE_CASE = false;
 
 PARSER_BEGIN(Grammar20201)package br.com.compiladores;
 
-public class Grammar20201{  public static void main(String args []) throws ParseException  {    Grammar20201 parser = new Grammar20201(System.in);    while (true)    {      System.out.println("Reading from standard input...");      System.out.print("Entre com o código: ");      try      {        switch (Grammar20201.one_line())        {          case 0 :           System.out.println("OK.");          break;          case 1 :           System.out.println("Goodbye.");          break;          default :           break;        }      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());        Grammar20201.ReInit(System.in);      }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(Grammar20201)SKIP :
+public class Grammar20201{  public static void main(String args []) throws ParseException  {     Interface tela = new Interface();
+	 tela.setVisible(true);  }}PARSER_END(Grammar20201)SKIP :
 {
   " "
 | "\r"
@@ -168,7 +169,7 @@ void Comandos(): { }
 //dec de comandos de repeticao
 void ComandoRepeticao(): {}
 {
-	<REPEAT> <THIS> Expressao() <COLCH_ESQ> ListaDeComandos() <COLCH_DIR>
+	<REPEAT> <THIS> Expressao() <COLCH_ESQ> ListaDeComandos() <COLCH_DIR> <PONTO>
 }
 
 
@@ -207,7 +208,7 @@ void LinhaUntrue(): {}
 // dec comando de saida de dados
 void ComandoSaidaDados(): { }
 {
-  <WRITE> LinhasWriters()  
+  <WRITE> LinhasWriters() <PONTO> 
 }
 void LinhasWriters(): {}
 {
@@ -227,14 +228,14 @@ void LinhaWrite(): {}
 // dec comando de entrada de dados
 void ComandoEntradaDados(): { }
 {
-  <READ> <THIS> <COLCH_ESQ> ListaDeIdentificadoresVet() <COLCH_DIR>
+  <READ> <THIS> <COLCH_ESQ> ListaDeIdentificadoresVet() <COLCH_DIR> <PONTO>
 }
 
 
 // dec comando de atribuicao
 void ComandoAtribuicao(): {}
 {
-  <DESIGNATE> <THIS> ListaDeIdentificadoresVet() <AS> Expressao()
+  <DESIGNATE> <THIS> ListaDeIdentificadoresVet() <AS> Expressao() <PONTO>
 }
 
 

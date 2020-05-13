@@ -49,7 +49,7 @@ public class Interface extends JFrame {
 	 */
 	public Interface() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 566);
+		setBounds(100, 100, 900, 588);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -164,6 +164,7 @@ public class Interface extends JFrame {
 
 	    JButton btnNew = new JButton(new ImageIcon("images/new.png"));
 	    btnNew.setBounds(5, 5, 30, 30);
+	    btnNew.setToolTipText("New");
 	    contentPane.add(btnNew);
 	    
 	    btnNew.addActionListener(new ActionListener() {
@@ -174,6 +175,7 @@ public class Interface extends JFrame {
 	    
 	    JButton btnOpen = new JButton(new ImageIcon("images/open.png"));
 	    btnOpen.setBounds(38, 5, 30, 30);
+	    btnOpen.setToolTipText("Open");
 	    contentPane.add(btnOpen);
 	    
 	    btnOpen.addActionListener(new ActionListener() {
@@ -188,6 +190,7 @@ public class Interface extends JFrame {
 	    
 	    JButton btnSave = new JButton(new ImageIcon("images/save.png"));
 	    btnSave.setBounds(71, 5, 30, 30);
+	    btnSave.setToolTipText("Save");
 	    contentPane.add(btnSave);
 	    
 	    btnSave.addActionListener(new ActionListener() {
@@ -198,6 +201,7 @@ public class Interface extends JFrame {
 	    
 	    JButton btnCut = new JButton(new ImageIcon("images/cut.png"));
 	    btnCut.setBounds(110, 5, 30, 30);
+	    btnCut.setToolTipText("Cut");
 	    contentPane.add(btnCut);
 	    
 	    btnCut.addActionListener(new ActionListener() {
@@ -208,6 +212,7 @@ public class Interface extends JFrame {
 	    
 	    JButton btnCopy = new JButton(new ImageIcon("images/copy.png"));
 	    btnCopy.setBounds(143, 5, 30, 30);
+	    btnCopy.setToolTipText("Copy");
 	    contentPane.add(btnCopy);
 	    
 	    btnCopy.addActionListener(new ActionListener() {
@@ -218,6 +223,7 @@ public class Interface extends JFrame {
 	    
 	    JButton btnPaste = new JButton(new ImageIcon("images/paste.png"));
 	    btnPaste.setBounds(176, 5, 30, 30);
+	    btnPaste.setToolTipText("Paste");
 	    contentPane.add(btnPaste);
 	    
 	    btnPaste.addActionListener(new ActionListener() {
@@ -228,10 +234,12 @@ public class Interface extends JFrame {
 	    
 	    JButton btnCompiler = new JButton(new ImageIcon("images/compiler.png"));
 	    btnCompiler.setBounds(215, 5, 30, 30);
+	    btnCompiler.setToolTipText("Compiler");
 	    contentPane.add(btnCompiler);
 	    
 	    JButton btnRun = new JButton(new ImageIcon("images/run.png"));
 	    btnRun.setBounds(248, 5, 30, 30);
+	    btnRun.setToolTipText("Run");
 	    contentPane.add(btnRun);
 	    
 	    
@@ -273,7 +281,7 @@ public class Interface extends JFrame {
 	      while (lerArq.ready()) {
 	        linha += "\n"+lerArq.readLine(); // lê da segunda até a última linha
 	      }
-	 
+	      actualFile = file;
 	      arq.close();
 	      return linha;
 	    } catch (IOException e) {
@@ -317,11 +325,19 @@ public class Interface extends JFrame {
 				textAreaINPUT.setText("");
 				actualFile = null;
 				textFileTemp = null;
+			} else {
+				textAreaINPUT.setText("");
+				actualFile = null;
+				textFileTemp = null;
 			}
 		}else if ((textFileTemp != null && !textFileTemp.equals(textAreaINPUT.getText())) ) {
 			int answer = JOptionPane.showConfirmDialog(this, "Save changes?", "Warning", JOptionPane.YES_NO_OPTION);
 			if (answer == JOptionPane.YES_OPTION) {
 				saveFile();
+				textAreaINPUT.setText("");
+				actualFile = null;
+				textFileTemp = null;
+			} else {
 				textAreaINPUT.setText("");
 				actualFile = null;
 				textFileTemp = null;

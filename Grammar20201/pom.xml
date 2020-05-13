@@ -3,4 +3,11 @@
   <groupId>br.com.compiladores</groupId>
   <artifactId>Grammar20201</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+    <dependencies>
+	<dependency>
+	    <groupId>net.java.dev.javacc</groupId>
+	    <artifactId>javacc</artifactId>
+	    <version>7.0.5</version>
+	</dependency>
+</dependencies>
 </project>
